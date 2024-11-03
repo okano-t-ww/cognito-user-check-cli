@@ -79,3 +79,6 @@ chmod +x ccu.sh
 確認ステータス:     CONFIRMED
 ステータス　　:     true
 ```
+
+![image](https://github.com/user-attachments/assets/005c1b85-1e81-4773-9849-5c595c0b860f)
+
