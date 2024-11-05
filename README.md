@@ -4,8 +4,6 @@
 
 このスクリプトでは、AWS CLI を使用して Amazon Cognito のユーザー情報を取得・表示します。
 
-ccu は check cognito user の略です。
-
 ## AWS CLI 設定
 
 ### インストール
@@ -42,6 +40,8 @@ aws configure
 ### スクリプトの保存
 
 `ccu.sh`を任意の場所にコピー
+
+ccu は check cognito user の略です。
 
 ### スクリプトに実行権限を付与
 
