@@ -1,60 +1,60 @@
 @echo off
 setlocal enabledelayedexpansion
 
-:: User Pool IDã®å…¥åŠ›
+:: User Pool ID‚Ì“ü—Í
 set /p "user_pool_id=User Pool ID: "
 
-:: ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã®å…¥åŠ›
+:: ƒ[ƒ‹ƒAƒhƒŒƒX‚Ì“ü—Í
 set /p "user_email=email: "
 
-:: ä¸€æ™‚ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ã‚’æŒ‡å®š
+:: ˆêƒtƒ@ƒCƒ‹‚ÌƒpƒX‚ğw’è
 set "temp_file=%TEMP%\cognito_user_info.json"
 
-:: AWS CLIã§Cognitoãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚’ä¸€åº¦ã«å–å¾—ã—ã€ãã®çµæœã‚’ä¸€æ™‚ãƒ•ã‚¡ã‚¤ãƒ«ã«ä¿å­˜
+:: AWS CLI‚ÅCognitoƒ†[ƒU[î•ñ‚ğˆê“x‚Éæ“¾‚µA‚»‚ÌŒ‹‰Ê‚ğˆêƒtƒ@ƒCƒ‹‚É•Û‘¶
 aws cognito-idp list-users --user-pool-id "%user_pool_id%" --filter "email = \"%user_email%\"" --query "Users[0]" --output json > "%temp_file%"
 
-:: å–å¾—ã—ãŸJSONã‹ã‚‰å„æƒ…å ±ã‚’æŠ½å‡º
+:: æ“¾‚µ‚½JSON‚©‚çŠeî•ñ‚ğ’Šo
 for /f "delims=" %%A in ('jq -r ".Username" "%temp_file%"') do set "cognito_username=%%A"
 for /f "delims=" %%A in ('jq -r ".Attributes[] | select(.Name == \"email\") | .Value" "%temp_file%"') do set "cognito_email=%%A"
 for /f "delims=" %%A in ('jq -r ".Attributes[] | select(.Name == \"email_verified\") | .Value" "%temp_file%"') do set "cognito_email_verified=%%A"
 for /f "delims=" %%A in ('jq -r ".UserStatus" "%temp_file%"') do set "cognito_status=%%A"
 for /f "delims=" %%A in ('jq -r ".Enabled" "%temp_file%"') do set "cognito_enabled=%%A"
 
-:: ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚’è¡¨ç¤º
+:: ƒ†[ƒU[î•ñ‚ğ•\¦
 echo.
 echo User Information for %user_email% in User Pool %user_pool_id%:
 echo -----------------------------------------------
 if defined cognito_username (
-    echo ãƒ¦ãƒ¼ã‚¶ãƒ¼åã€€ã€€:     %cognito_username%
+    echo ƒ†[ƒU[–¼@@:     %cognito_username%
 ) else (
-    echo ãƒ¦ãƒ¼ã‚¶ãƒ¼åã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ
+    echo ƒ†[ƒU[–¼‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½
 )
 
 if defined cognito_email (
-    echo ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹:     %cognito_email%
+    echo ƒ[ƒ‹ƒAƒhƒŒƒX:     %cognito_email%
 ) else (
-    echo ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ
+    echo ƒ[ƒ‹ƒAƒhƒŒƒX‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½
 )
 
 if defined cognito_email_verified (
-    echo ãƒ¡ãƒ¼ãƒ«ç¢ºèªæ¸ˆã¿:     %cognito_email_verified%
+    echo ƒ[ƒ‹Šm”FÏ‚İ:     %cognito_email_verified%
 ) else (
-    echo ãƒ¡ãƒ¼ãƒ«ç¢ºèªæ¸ˆã¿ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ
+    echo ƒ[ƒ‹Šm”FÏ‚İ‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½
 )
 
 if defined cognito_status (
-    echo ç¢ºèªã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹:     %cognito_status%
+    echo Šm”FƒXƒe[ƒ^ƒX:     %cognito_status%
 ) else (
-    echo ç¢ºèªã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ
+    echo Šm”FƒXƒe[ƒ^ƒX‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½
 )
 
 if defined cognito_enabled (
-    echo ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã€€ã€€:     %cognito_enabled%
+    echo ƒXƒe[ƒ^ƒX@@:     %cognito_enabled%
 ) else (
-    echo ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ
+    echo ƒXƒe[ƒ^ƒX‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½
 )
 
-:: ä¸€æ™‚ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å‰Šé™¤
+:: ˆêƒtƒ@ƒCƒ‹‚ğíœ
 del "%temp_file%"
 
 endlocal
