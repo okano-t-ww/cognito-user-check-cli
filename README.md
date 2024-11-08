@@ -52,9 +52,15 @@ jq --version
 
 #### 1. スクリプトの保存
 
-`ccu.bat`を任意の場所にコピー
+- `ccu.bat`を任意の場所にコピー
+  - ccu は check cognito user の略です。
+- vscode でファイルを開き、以下の設定になっていることを右下のステータスバーから確認
+  | | |
+  | ---------------- | ----------- |
+  | 改行コード | `CRLF` |
+  | エンコードタイプ | `Shift JIS` |
 
-ccu は check cognito user の略です。
+  異なっている場合は変更して保存
 
 #### 2. スクリプトの実行
 
@@ -93,6 +99,7 @@ ccu は check cognito user の略です。
 確認ステータス:     CONFIRMED
 ステータス　　:     true
 ```
+
 ![image](https://github.com/user-attachments/assets/3269aa8a-878f-4b94-84fc-983a2431fa76)
 
 ---
