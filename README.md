@@ -93,6 +93,7 @@ ccu は check cognito user の略です。
 確認ステータス:     CONFIRMED
 ステータス　　:     true
 ```
+![image](https://github.com/user-attachments/assets/3269aa8a-878f-4b94-84fc-983a2431fa76)
 
 ---
 
