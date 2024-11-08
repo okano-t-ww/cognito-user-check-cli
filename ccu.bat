@@ -1,9 +1,6 @@
 @echo off
 setlocal enabledelayedexpansion
 
-:: コマンドプロンプトの文字コードをUTF-8に設定
-chcp 65001
-
 :: User Pool IDの入力
 set /p "user_pool_id=User Pool ID: "
 
